@@ -178,3 +178,71 @@ In an omnichannel environment, a handoff may involve:
 - attaching conversation context;
 - disabling automated replies temporarily;
 - notifying the user that a human will continue the interaction.
+
+## Pattern 02: Missing Critical Context
+
+### Scenario
+
+The user asks for something that cannot be handled reliably because important information is missing.
+
+Examples:
+
+- "Can you check my application?"
+- "Change the address on my account."
+- "Why was this request rejected?"
+- "Can you send the document again?"
+
+In these cases, the request may be understandable, but the agent may still lack the information required to act safely or accurately.
+
+### Rule
+
+When critical context is missing, the agent should ask for the minimum additional information required to continue.
+
+The agent should not invent missing details, make unsupported assumptions or move directly to escalation if clarification can safely resolve the uncertainty.
+
+### Expected behavior
+
+The agent should:
+
+1. Identify which information is actually missing.
+2. Ask only for information that is necessary to continue.
+3. Explain why the information is needed when appropriate.
+4. Avoid asking for information already available in the conversation or system context.
+5. Re-evaluate the request after receiving the missing context.
+6. Escalate only when the missing information cannot be obtained or safely resolved.
+
+### Example
+
+**User**
+
+> Can you check the status of my request?
+
+**Agent**
+
+> I can help with that. Which request are you referring to?
+
+### Anti-pattern
+
+Avoid asking broad or unnecessary questions such as:
+
+> Please provide all your personal information so I can assist you.
+
+A clarification step should reduce uncertainty without creating unnecessary friction or collecting excessive information.
+
+### Implementation note
+
+A production system may determine missing context through:
+
+- required field validation;
+- conversation state;
+- structured memory;
+- authenticated user data;
+- tool responses;
+- workflow variables;
+- domain-specific validation rules.
+
+The agent should distinguish between:
+
+- **missing information**, which may be resolved by asking;
+- **unavailable information**, which may require a tool;
+- **restricted information**, which may require authorization or human intervention.
