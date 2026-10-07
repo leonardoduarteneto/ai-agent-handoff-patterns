@@ -246,3 +246,76 @@ The agent should distinguish between:
 - **missing information**, which may be resolved by asking;
 - **unavailable information**, which may require a tool;
 - **restricted information**, which may require authorization or human intervention.
+
+## Pattern 03: Tool Required
+
+### Scenario
+
+The user asks for information or an action that depends on external data, a system of record or another service.
+
+Examples:
+
+- "What is the current status of my request?"
+- "Update my phone number."
+- "Send me the latest invoice."
+- "Check whether my payment was received."
+
+The agent may understand the request perfectly but still be unable to answer reliably without consulting or acting through an external system.
+
+### Rule
+
+When the requested information or action depends on external state, the agent should use the appropriate tool instead of guessing or relying on potentially outdated model knowledge.
+
+### Expected behavior
+
+The agent should:
+
+1. Determine whether a tool is actually required.
+2. Select the correct tool or system.
+3. Confirm that the agent is authorized to use it.
+4. Pass only the information required for the operation.
+5. Validate the tool response before presenting it to the user.
+6. Clearly communicate failures, uncertainty or unavailable data.
+7. Escalate when the tool cannot safely complete the request.
+
+### Example
+
+**User**
+
+> Has my payment been received?
+
+**Agent**
+
+> I'll check the latest payment status for you.
+
+The agent then queries the appropriate system and responds using the returned data.
+
+### Anti-pattern
+
+Avoid responses such as:
+
+> Your payment has probably already been processed.
+
+If the answer depends on live or authoritative data, the agent should not speculate.
+
+### Implementation note
+
+Tool usage may include:
+
+- querying APIs;
+- retrieving records from databases;
+- calling internal services;
+- triggering workflows;
+- updating external systems;
+- retrieving authenticated account information.
+
+A tool call should be treated as part of the decision process, not as automatic permission to perform an action.
+
+The agent should still consider:
+
+- authorization;
+- risk;
+- reversibility;
+- user confirmation;
+- tool reliability;
+- domain-specific rules.
