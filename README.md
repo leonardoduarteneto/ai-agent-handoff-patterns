@@ -89,4 +89,33 @@ The following matrix provides a simple starting point for choosing the next acti
 
 These patterns are not intended to replace domain-specific rules.
 
+## Decision flow
+
+A simple decision path can help make the handoff logic explicit.
+
+```mermaid
+flowchart TD
+    A[User request] --> B{Is the request clear?}
+
+    B -- No --> C[Ask for clarification]
+    B -- Yes --> D{Is external data or an action required?}
+
+    D -- Yes --> E{Is the agent authorized?}
+    E -- No --> H[Hand off to a human]
+    E -- Yes --> F[Use a tool]
+
+    D -- No --> G{Is confidence sufficient and risk acceptable?}
+    F --> G
+
+    G -- No --> I{Can the situation be safely escalated?}
+    I -- Yes --> J[Escalate]
+    I -- No --> H
+
+    G -- Yes --> K{Does the user request human help?}
+    K -- Yes --> H
+    K -- No --> L{Is human judgment or empathy required?}
+
+    L -- Yes --> H
+    L -- No --> M[Respond]
+
 The appropriate thresholds for confidence, risk and authorization depend on the product, organization and regulatory context in which the agent operates.
