@@ -89,6 +89,8 @@ The following matrix provides a simple starting point for choosing the next acti
 
 These patterns are not intended to replace domain-specific rules.
 
+The appropriate thresholds for confidence, risk and authorization depend on the product, organization and regulatory context in which the agent operates.
+
 ## Decision flow
 
 A simple decision path can help make the handoff logic explicit.
@@ -117,5 +119,4 @@ flowchart TD
 
     L -- Yes --> H
     L -- No --> M[Respond]
-
-The appropriate thresholds for confidence, risk and authorization depend on the product, organization and regulatory context in which the agent operates.
+```
