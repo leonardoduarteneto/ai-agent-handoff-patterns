@@ -69,3 +69,24 @@ Some interactions are better handled by a human even when the agent technically 
 Can a wrong decision be easily reversed?
 
 Irreversible or costly actions should have a lower threshold for escalation or human confirmation.
+
+## Decision matrix
+
+The following matrix provides a simple starting point for choosing the next action.
+
+| Situation | Recommended action |
+|---|---|
+| Clear request, sufficient context, low risk | **Respond** |
+| Important context is missing | **Ask** |
+| External information or an action is required | **Use a tool** |
+| Low confidence or higher-risk situation | **Escalate** |
+| User explicitly requests a person | **Hand off to a human** |
+| Authorization is required and unavailable | **Hand off to a human** |
+| Emotionally sensitive or conflict-heavy interaction | **Hand off to a human** |
+| Irreversible or high-impact action | **Escalate or require human confirmation** |
+
+### Important
+
+These patterns are not intended to replace domain-specific rules.
+
+The appropriate thresholds for confidence, risk and authorization depend on the product, organization and regulatory context in which the agent operates.
