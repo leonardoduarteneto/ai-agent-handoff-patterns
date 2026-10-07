@@ -319,3 +319,72 @@ The agent should still consider:
 - user confirmation;
 - tool reliability;
 - domain-specific rules.
+
+## Pattern 04: Low Confidence or High Risk
+
+### Scenario
+
+The agent understands the request, but the situation involves uncertainty, higher potential impact or both.
+
+Examples:
+
+- The agent is unsure which policy applies.
+- Multiple interpretations of the request are possible.
+- The requested action could affect money, access, eligibility or legal rights.
+- A wrong answer could create significant user harm.
+- The model produces conflicting signals from available context.
+
+### Rule
+
+When confidence is insufficient or the potential impact of an error is high, the agent should not proceed as if the decision were certain.
+
+The appropriate response may be to ask for clarification, request confirmation, escalate to a safer process or hand off to a human.
+
+### Expected behavior
+
+The agent should:
+
+1. Recognize uncertainty instead of hiding it.
+2. Consider both confidence and potential impact.
+3. Avoid presenting uncertain conclusions as facts.
+4. Ask for clarification when additional context can reduce uncertainty.
+5. Require confirmation before higher-impact or irreversible actions when appropriate.
+6. Escalate to a safer workflow when domain rules require additional validation.
+7. Hand off to a human when reliable resolution requires human judgment.
+
+### Example
+
+**User**
+
+> Can you confirm that I am eligible for this benefit?
+
+**Agent**
+
+> I can help review the available criteria, but I should not confirm eligibility without the required information and validation. Let's check the necessary details first.
+
+### Anti-pattern
+
+Avoid responses such as:
+
+> Yes, you should definitely be eligible.
+
+when the agent does not have enough evidence to make that determination.
+
+Uncertainty should not be converted into confidence simply to keep the conversation moving.
+
+### Implementation note
+
+Confidence should not be treated as a single model-generated number.
+
+A production system may combine signals such as:
+
+- completeness of required context;
+- tool availability and reliability;
+- rule validation;
+- conflicting information;
+- model uncertainty;
+- action impact;
+- reversibility;
+- domain-specific risk classification.
+
+Higher risk should generally reduce the amount of uncertainty tolerated before escalation or human review.
