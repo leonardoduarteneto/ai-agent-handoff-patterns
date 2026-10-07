@@ -120,3 +120,61 @@ flowchart TD
     L -- Yes --> H
     L -- No --> M[Respond]
 ```
+
+## Pattern 01: Explicit Human Request
+
+### Scenario
+
+The user explicitly asks to speak with a human, agent, specialist or representative.
+
+Examples:
+
+- "I want to talk to a person."
+- "Can you transfer me to an agent?"
+- "I need human support."
+- "Please let me speak with someone."
+
+### Rule
+
+When the user clearly requests human assistance, the agent should not force additional automation unless a required safety or routing step must happen first.
+
+### Expected behavior
+
+The agent should:
+
+1. Acknowledge the request.
+2. Avoid unnecessary persuasion to continue with the AI.
+3. Collect only the minimum information required for routing.
+4. Preserve relevant conversation context.
+5. Transfer the conversation to the appropriate human queue or agent.
+6. Clearly tell the user what will happen next.
+
+### Example
+
+**User**
+
+> I want to speak with a human.
+
+**Agent**
+
+> Of course. I'll transfer your conversation to a human agent and keep the context from our conversation so you don't need to repeat everything.
+
+### Anti-pattern
+
+Avoid responses such as:
+
+> Before transferring you, let me try one more time to solve your problem.
+
+If the user has clearly requested human assistance, unnecessary friction can reduce trust and worsen the experience.
+
+### Implementation note
+
+The exact handoff mechanism depends on the platform.
+
+In an omnichannel environment, a handoff may involve:
+
+- assigning the conversation to a human team;
+- changing an inbox, queue or routing state;
+- attaching conversation context;
+- disabling automated replies temporarily;
+- notifying the user that a human will continue the interaction.
