@@ -388,3 +388,75 @@ A production system may combine signals such as:
 - domain-specific risk classification.
 
 Higher risk should generally reduce the amount of uncertainty tolerated before escalation or human review.
+
+## Pattern 05: Authorization Required
+
+### Scenario
+
+The agent understands the request and may technically be able to perform the action, but the operation requires permission, verification or approval.
+
+Examples:
+
+- "Change the bank account linked to my profile."
+- "Cancel this contract."
+- "Approve this transaction."
+- "Give this user access to the system."
+- "Send confidential account information."
+
+The agent's technical capability does not imply authorization to perform the action.
+
+### Rule
+
+Before performing restricted or sensitive actions, the agent should verify that the required authorization conditions have been met.
+
+If authorization cannot be confirmed, the agent should not proceed.
+
+### Expected behavior
+
+The agent should:
+
+1. Identify whether the requested action requires authorization.
+2. Verify the user's identity or permissions through an approved mechanism.
+3. Distinguish between authorization to view information and authorization to modify it.
+4. Avoid exposing sensitive information before authorization is confirmed.
+5. Request approval or additional verification when required.
+6. Hand off to a human or authorized workflow when the agent cannot validate permission.
+7. Clearly explain what is required to continue.
+
+### Example
+
+**User**
+
+> Change the email address on my account.
+
+**Agent**
+
+> I can help with that, but I need to verify that you're authorized to make changes to this account before continuing.
+
+### Anti-pattern
+
+Avoid proceeding simply because the user requested the action:
+
+> Done. Your account information has been updated.
+
+The ability to call a tool or API does not mean the agent is permitted to perform the operation.
+
+### Implementation note
+
+Authorization checks may involve:
+
+- authenticated sessions;
+- user roles and permissions;
+- identity verification;
+- approval workflows;
+- multi-factor authentication;
+- policy engines;
+- domain-specific access rules.
+
+Authorization should be validated as close as possible to the action being performed.
+
+The agent should never rely only on natural-language claims such as:
+
+> "I'm the account owner."
+
+when stronger verification mechanisms are available.
